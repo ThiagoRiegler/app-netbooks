@@ -21,7 +21,8 @@
 		            	<th>Nombre y apellido</th>
 		            	<th>Curso</th>
 		                <th>PCs</th>
-		                <th>Estado</th>                                    
+		                <th>Estado</th>    
+		                <th></th>                                
 		            </tr>
 		     	</thead>
 		    	<tbody id="tabla">                                
@@ -78,7 +79,8 @@
 		  var cell4 = row.insertCell(3);
 		  var cell5 = row.insertCell(4);
 		  var cell6 = row.insertCell(5);
-		  
+		  var cell7 = row.insertCell(6);
+
 		  // asigna a las celdas el valir del Child especificado
 		  cell1.innerHTML = d.fecha;
 		  cell2.innerHTML = d.cargo;
@@ -86,6 +88,7 @@
 		  cell4.innerHTML = d.curso;
 		  cell5.innerHTML = d.PC;
 		  cell6.innerHTML = d.estado;
+		  cell7.innerHTML = "<td><button type='button' onclick=devolver()>Devuelto</button></td>";
 		  }
  
 		});
