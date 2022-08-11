@@ -3,23 +3,31 @@
 
 	<head>
 	
-		<title>App netbook</title>
+		<title>Registro material informatico</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
 
 	</head>
 	
 	<body>
 
-		 <table>
-		     <thead>
-		            <tr>
-		                <th>Edad</th>
-		                <th>Nombre</th>
-		                <th>Email</th>                                    
-		             </tr>
-		     </thead>
-		     <tbody id="tabla">                                
-		     </tbody>
-		 </table>
+		<h1>Registro material informatico</h1>
+
+		<div>
+			<table>
+		    	<thead>
+		        	<tr>
+		            	<th>Fecha y hora</th>
+		                <th>Cargo</th>
+		            	<th>Nombre y apellido</th>
+		            	<th>Curso</th>
+		                <th>PCs</th>
+		                <th>Estado</th>                                    
+		            </tr>
+		     	</thead>
+		    	<tbody id="tabla">                                
+		    	</tbody>
+			</table>
+		</div>
 
 	</body>
 
@@ -31,13 +39,14 @@
 		import {initializeApp} from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js';
 
 		const firebaseConfig = {
-		  apiKey: "AIzaSyDltIcpcmm-3USU9FjmRelKK11ZqhfogJY",
-		  authDomain: "registrousuario-c4d88.firebaseapp.com",
-		  databaseURL: "https://registrousuario-c4d88-default-rtdb.firebaseio.com",
-		  projectId: "registrousuario-c4d88",
-		  storageBucket: "registrousuario-c4d88.appspot.com",
-		  messagingSenderId: "613505973717",
-		  appId: "1:613505973717:web:082766b72ed0b83bc5d15c"
+			apiKey: "AIzaSyArhMpapnmPnHMqsr-DWF_iVfVW5ZOncoA",
+			authDomain: "ematp-cdd6d.firebaseapp.com",
+			databaseURL: "https://ematp-cdd6d-default-rtdb.firebaseio.com",
+			projectId: "ematp-cdd6d",
+			storageBucket: "ematp-cdd6d.appspot.com",
+			messagingSenderId: "601799982600",
+			appId: "1:601799982600:web:e1e5af5e5d1b82aa3b5bbd",
+			measurementId: "G-TJYNE66YGH"
 		};
 
 		firebase.initializeApp(firebaseConfig);
@@ -47,7 +56,7 @@
 	<script type="module">//Muestra los datos en una tabla
 
 		var db = firebase.database();
-		var ref = db.ref("users");
+		var ref = db.ref("MarcelaProjectX");
 		     
 		var table = document.getElementById("tabla");
 		    
@@ -56,7 +65,7 @@
 		 
 		 //con esta función recorre todos los datos almacenados en FB ordenados por mi child(tipo)
 		    
-		ref.orderByChild("edad").on("child_added", function(snapshot){
+		ref.orderByChild("fecha").on("child_added", function(snapshot){
 		//repite el proceso como cuantas referencias encuentre y los asigna a la lista "d"
 		     
 		  var d = snapshot.val();        
@@ -66,11 +75,17 @@
 		  var cell1 = row.insertCell(0);
 		  var cell2 = row.insertCell(1);
 		  var cell3 = row.insertCell(2);
+		  var cell4 = row.insertCell(3);
+		  var cell5 = row.insertCell(4);
+		  var cell6 = row.insertCell(5);
 		  
 		  // asigna a las celdas el valir del Child especificado
-		  cell1.innerHTML = d.edad;
-		  cell2.innerHTML = d.nombre;
-		  cell3.innerHTML = d.email;
+		  cell1.innerHTML = d.fecha;
+		  cell2.innerHTML = d.cargo;
+		  cell3.innerHTML = d.nombre;
+		  cell4.innerHTML = d.curso;
+		  cell5.innerHTML = d.PC;
+		  cell6.innerHTML = d.estado;
 		  }
  
 		});
