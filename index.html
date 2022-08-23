@@ -11,34 +11,6 @@
 	
 	<body>
 
-		<h1>Registro material informatico</h1>
-		
-		<form>
-			
-			<input type="date" name="fecha" id="fecha"><br>
-			<input type="button" value="Buscar" onclick="ConsultaFecha(fecha)">
-
-		</form>
-
-		<div>
-			<table>
-		    	<thead>
-		        	<tr>
-		            	<th>Fecha</th>
-		            	<th>Hora</th>
-		                <th>Cargo</th>
-		            	<th>Nombre y apellido</th>
-		            	<th>Curso</th>
-		                <th>PCs</th>
-		                <th>Fecha de devolucion</th>
-		                <th>Estado</th>    
-		                <th></th>                                
-		            </tr>
-		     	</thead>
-		    	<tbody id="tabla">                                
-		    	</tbody>
-		</div>
-
 		<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
 
@@ -97,16 +69,17 @@
 
 			}
 			 
-			});
+			});		
+			
+		</script>
 
-			function ConsultaFecha(fecha){
+		<script>	
 
-				alert("a")
+			function ConsultaFecha(fecha){	
 
-				firebase.collection("MarcelaProjectX");
-				firebase.where("fecha", "==", fecha);
-				firebase.get();
-					const datos = snapshot.val();
+				const q = query(collection(db, "cities"), where("capital", "==", true));
+
+				const querySnapshot = getDocs(q);
 
 					{
 						var row = table.insertRow(0);
@@ -129,12 +102,41 @@
 						cell6.innerHTML = datos.PC;
 						cell8.innerHTML = datos.estado;
 						cell9.innerHTML = '<button type="button" onclick="devolver(${doc.fecha})">Devuelto</button>';
-
 					}
 
-				}
+			}
 
 		</script>
+
+
+		<h1>Registro material informatico</h1>
+		
+		<form>
+			
+			<input type="date" name="fecha" id="fecha"><br>
+			<input type="button" value="Buscar" onclick="ConsultaFecha(fecha)">
+
+		</form>
+
+		<div>
+			<table>
+		    	<thead>
+		        	<tr>
+		            	<th>Fecha</th>
+		            	<th>Hora</th>
+		                <th>Cargo</th>
+		            	<th>Nombre y apellido</th>
+		            	<th>Curso</th>
+		                <th>PCs</th>
+		                <th>Fecha de devolucion</th>
+		                <th>Estado</th>    
+		                <th></th>                                
+		            </tr>
+		     	</thead>
+		    	<tbody id="tabla">                                
+		    	</tbody>
+		</div>
+
 
 	</body>
 
