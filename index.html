@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 	<head>
 	
@@ -15,6 +15,7 @@
 		<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
 
 		<script type="module">//Conecta con la base de datos
+
 			import {initializeApp} from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js';
 
 			const firebaseConfig = {
@@ -65,7 +66,7 @@
 				cell5.innerHTML = d.curso;
 				cell6.innerHTML = d.PC;
 				cell8.innerHTML = d.estado;
-				cell9.innerHTML = '<button type="button" onclick="devolver(${doc.fecha})">Devuelto</button>';
+				cell9.innerHTML = '<button type="button" onclick="devolver(d.fecha)">Devuelto</button>';
 
 			}
 			 
@@ -77,9 +78,32 @@
 
 			function ConsultaFecha(fecha){	
 
-				const q = query(collection(db, "cities"), where("capital", "==", true));
+				var recentPostsRef = firebase.database().ref("MarcelaProjectX");
 
-				const querySnapshot = getDocs(q);
+				var db = firebase.database();
+					     
+				var table = document.getElementById("tabla");
+					    
+				var x = document.getElementById("frm1");
+  					var text = "";
+  					var i;
+  					for (i = 0; i < x.length ;i++) {
+    				text += x.elements[i].value + "<br>";
+  				}
+
+  				//cambiar formato fecha
+  				var options = { year: 'numeric', month: 'long', day: 'numeric' };
+  				text.toLocaleDateString("es-ES", options)
+  				console.log(text);
+
+				//limpia la tabla
+				table.innerHTML = "";
+
+				recentPostsRef.orderByChild('fecha').equalTo(text).once("value", function(snapshot) {
+			  		
+					console.log(snapshot.val());
+
+			  		var d = snapshot.val(); 
 
 					{
 						var row = table.insertRow(0);
@@ -94,24 +118,25 @@
 						var cell9 = row.insertCell(8);
 
 						// asigna a las celdas el valir del Child especificado
-						cell1.innerHTML = datos.fecha;
-						cell2.innerHTML = datos.hora;
-						cell3.innerHTML = datos.cargo;
-						cell4.innerHTML = datos.nombre;
-						cell5.innerHTML = datos.curso;
-						cell6.innerHTML = datos.PC;
-						cell8.innerHTML = datos.estado;
+						cell1.innerHTML = d.fecha;
+						cell2.innerHTML = d.hora;
+						cell3.innerHTML = d.cargo;
+						cell4.innerHTML = d.nombre;
+						cell5.innerHTML = d.curso;
+						cell6.innerHTML = d.PC;
+						cell8.innerHTML = d.estado;
 						cell9.innerHTML = '<button type="button" onclick="devolver(${doc.fecha})">Devuelto</button>';
 					}
 
-			}
+				})
+
+			}	
 
 		</script>
 
-
 		<h1>Registro material informatico</h1>
 		
-		<form>
+		<form id="frm1">
 			
 			<input type="date" name="fecha" id="fecha"><br>
 			<input type="button" value="Buscar" onclick="ConsultaFecha(fecha)">
