@@ -13,6 +13,7 @@
 
 		<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
 
 		<script type="module">//Conecta con la base de datos
 
@@ -41,7 +42,7 @@
 			table.innerHTML = "";
 					 
 			//con esta función recorre todos los datos almacenados en FB ordenados por mi child(tipo)    
-			ref.orderByChild("fecha").on("child_added", function(snapshot){
+			ref.orderByKey().on("child_added", function(snapshot){
 
 			//repite el proceso como cuantas referencias encuentre y los asigna a la lista "d" 
 			var d = snapshot.val();        
@@ -76,30 +77,28 @@
 
 		<script>	
 
-			function ConsultaFecha(fecha){	
+			function ConsultaFecha(){	
 
 				var recentPostsRef = firebase.database().ref("MarcelaProjectX");
-
-				var db = firebase.database();
 					     
 				var table = document.getElementById("tabla");
 					    
 				var x = document.getElementById("frm1");
-  					var text = "";
-  					var i;
-  					for (i = 0; i < x.length ;i++) {
-    				text += x.elements[i].value + "<br>";
-  				}
+  				var text = "";
+    			text = x.elements[0].value;
 
-  				//cambiar formato fecha
-  				var options = { year: 'numeric', month: 'long', day: 'numeric' };
-  				text.toLocaleDateString("es-ES", options)
-  				console.log(text);
+				text = dayjs(text).format('DD-MM-YYYY');
+    			var comilla = '"';
+    			var barra = String.fromCharCode(92,47);
+    			fechaFin = comilla.concat(text,comilla);
+    			fechaFin = fechaFin.replace(/-/g, barra)
 
 				//limpia la tabla
 				table.innerHTML = "";
 
-				recentPostsRef.orderByChild('fecha').equalTo(text).once("value", function(snapshot) {
+				recentPostsRef.orderByChild('fecha')
+				.equalTo(fechaFin)
+				.on("child_added", function(snapshot) {
 			  		
 					console.log(snapshot.val());
 
@@ -117,7 +116,7 @@
 						var cell8 = row.insertCell(7);
 						var cell9 = row.insertCell(8);
 
-						// asigna a las celdas el valir del Child especificado
+						// asigna a las celdas el valor del Child especificado
 						cell1.innerHTML = d.fecha;
 						cell2.innerHTML = d.hora;
 						cell3.innerHTML = d.cargo;
@@ -138,8 +137,8 @@
 		
 		<form id="frm1">
 			
-			<input type="date" name="fecha" id="fecha"><br>
-			<input type="button" value="Buscar" onclick="ConsultaFecha(fecha)">
+			<input type="date" name="fecha1" id="fecha"><br>
+			<input type="button" value="Buscar" onclick="ConsultaFecha()">
 
 		</form>
 
