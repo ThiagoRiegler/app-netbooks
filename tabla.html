@@ -34,7 +34,14 @@
 
 			firebase.initializeApp(firebaseConfig);
 
-			//Muestra los datos en una tabla
+			MostrarTabla();			
+			
+		</script>
+
+		<script>	
+
+			function MostrarTabla(){
+				//Muestra los datos en una tabla
 			var db = firebase.database();
 			var ref = db.ref("MarcelaProjectX");
 					     
@@ -74,10 +81,7 @@
 			}
 			 
 			});		
-			
-		</script>
-
-		<script>	
+			}
 
 			function ConsultaFecha(){	
 
@@ -143,10 +147,16 @@
 
 		<form id="frm1">
 
-			<div class="input-group flex-nowrap w-25 mx-auto">
-  				<span class="input-group-text">Fecha</span>
- 				<input type="date" class="form-control">
- 				<input class="btn btn-outline-dark" type="button" value="Buscar" onclick="ConsultaFecha()">
+			<div class=" d-grid gap-2 d-md-flex justify-content-md-end">
+				
+				<div class="input-group flex-nowrap w-25 mx-auto">
+  					<span class="input-group-text">Fecha</span>
+ 					<input type="date" class="form-control">
+ 					<input class="btn btn-outline-dark" type="button" value="Buscar" onclick="ConsultaFecha()">
+				</div>
+
+				<input class="btn btn-outline-dark" type="button" value="Reinciar filtros" onclick="MostrarTabla()">
+
 			</div>
 
 		</form>
