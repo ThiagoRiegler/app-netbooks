@@ -49,6 +49,7 @@
 					    
 			//limpia la tabla
 			table.innerHTML = "";
+			diagonal = String.fromCharCode(92);
 					 
 			//con esta función recorre todos los datos almacenados en FB ordenados por mi child(tipo)    
 			ref.orderByKey().on("child_added", function(snapshot){
@@ -69,13 +70,13 @@
 				var cell9 = row.insertCell(8);
 
 				// asigna a las celdas el valir del Child especificado
-				cell1.innerHTML = d.fecha;
-				cell2.innerHTML = d.hora;
-				cell3.innerHTML = d.cargo;
-				cell4.innerHTML = d.nombre;
-				cell5.innerHTML = d.curso;
-				cell6.innerHTML = d.PC;
-				cell8.innerHTML = d.estado;
+				cell1.innerHTML = d.fecha.replace(/"/g, '').replace(diagonal, '').replace(diagonal, '');
+				cell2.innerHTML = d.hora.replace(/"/g, '');
+				cell3.innerHTML = d.cargo.replace(/"/g, '');
+				cell4.innerHTML = d.nombre.replace(/"/g, '');
+				cell5.innerHTML = d.curso.replace(/"/g, '').replace(diagonal, '').replace(diagonal, '');
+				cell6.innerHTML = d.PC.replace(/"/g, '');
+				cell8.innerHTML = d.estado.replace(/"/g, '');
 				cell9.innerHTML = '<button type="button" class="btn btn-outline-dark" onclick="devolver(d.fecha)">Devuelto</button>';
 
 			}
