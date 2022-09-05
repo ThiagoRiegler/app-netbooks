@@ -41,6 +41,7 @@
 		<script>	
 
 			function MostrarTabla(){
+
 				//Muestra los datos en una tabla
 			var db = firebase.database();
 			var ref = db.ref("MarcelaProjectX");
@@ -76,8 +77,14 @@
 				cell4.innerHTML = d.nombre.replace(/"/g, '');
 				cell5.innerHTML = d.curso.replace(/"/g, '').replace(diagonal, '').replace(diagonal, '');
 				cell6.innerHTML = d.PC.replace(/"/g, '');
+				cell7.innerHTML = d.fechadev.replace(/"/g, '').replace(diagonal, '').replace(diagonal, '');
 				cell8.innerHTML = d.estado.replace(/"/g, '');
-				cell9.innerHTML = '<button type="button" class="btn btn-outline-dark" onclick="devolver(d.fecha)">Devuelto</button>';
+				if(d.estado=='"En uso"'){
+
+					cell9.innerHTML = '<button type="button" class="btn btn-outline-dark" onclick=devolver()>Devuelto</button>';
+	
+				}
+
 
 			}
 			 
@@ -124,19 +131,41 @@
 						var cell9 = row.insertCell(8);
 
 						// asigna a las celdas el valor del Child especificado
-						cell1.innerHTML = d.fecha;
-						cell2.innerHTML = d.hora;
-						cell3.innerHTML = d.cargo;
-						cell4.innerHTML = d.nombre;
-						cell5.innerHTML = d.curso;
-						cell6.innerHTML = d.PC;
-						cell8.innerHTML = d.estado;
-						cell9.innerHTML = '<button type="button" class="btn btn-outline-dark" onclick="devolver(${doc.fecha})">Devuelto</button>';
+						cell1.innerHTML = d.fecha.replace(/"/g, '').replace(diagonal, '').replace(diagonal, '');
+						cell2.innerHTML = d.hora.replace(/"/g, '');
+						cell3.innerHTML = d.cargo.replace(/"/g, '');
+						cell4.innerHTML = d.nombre.replace(/"/g, '');
+						cell5.innerHTML = d.curso.replace(/"/g, '').replace(diagonal, '').replace(diagonal, '');
+						cell6.innerHTML = d.PC.replace(/"/g, '').replace(diagonal, '').replace(diagonal, '');
+						cell7.innerHTML = d.fechadev.replace(/"/g, '');
+						cell8.innerHTML = d.estado.replace(/"/g, '');
+						if(d.estado=='"En uso"'){
+
+							cell9.innerHTML = '<button type="button" class="btn btn-outline-dark" onclick=devolver()>Devuelto</button>';
+	
+						}
 					}
 
 				})
 				
 			}	
+
+			function devolver(){
+				var date = new Date();
+				var current_date = date.getDate()+"/"+(date.getMonth()+1)+"/"+ date.getFullYear();
+				var current_time = date.getHours()+":"+date.getMinutes()+":"+ date.getSeconds();
+
+				var db = firebase.database();
+				var ref = db.ref("MarcelaProjectX");
+				const hopperRef = ref.child(4);
+				hopperRef.update({
+				  'fechadev': current_date+" "+current_time,
+				  'estado': 'Devuelto'
+				});
+
+				MostrarTabla();
+				
+			}
 
 		</script>
 
