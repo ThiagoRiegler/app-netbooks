@@ -41,6 +41,7 @@
 		<script>	
 
 			function MostrarTabla(){
+			var i = 1;
 
 				//Muestra los datos en una tabla
 			var db = firebase.database();
@@ -81,9 +82,11 @@
 				cell8.innerHTML = d.estado.replace(/"/g, '');
 				if(d.estado=='"En uso"'){
 
-					cell9.innerHTML = '<button type="button" class="btn btn-outline-dark" onclick=devolver()>Devuelto</button>';
+					cell9.innerHTML = '<button type="button" class="btn btn-outline-dark" onclick=devolver() value=i>Devuelto</button>';
 	
 				}
+
+				i++;
 
 
 			}
@@ -152,14 +155,37 @@
 
 			function devolver(){
 				var date = new Date();
-				var current_date = date.getDate()+"/"+(date.getMonth()+1)+"/"+ date.getFullYear();
-				var current_time = date.getHours()+":"+date.getMinutes()+":"+ date.getSeconds();
+				var hora = date.getHours();
+				var minutos = date.getMinutes();
+				var segundos = date.getSeconds();
+				var dia = date.getDate();
+				var mes = date.getMonth()+1;
+				if(hora>12){
+					hora = hora-12;
+					var AmPm = "p.m.";
+				}else{
+					var AmPm = "a.m.";
+				}
+				if(minutos < 10){
+					minutos = "0"+minutos;
+				}
+				if(segundos < 10){
+					segundos = "0"+segundos;
+				}
+				if(dia < 10){
+					dia = "0"+dia;
+				}
+				if(mes < 10){
+					mes = "0"+mes;
+				}
+				var current_date = dia+"/"+mes+"/"+ date.getFullYear();
+				var current_time = hora+":"+minutos+":"+segundos;
 
 				var db = firebase.database();
 				var ref = db.ref("MarcelaProjectX");
-				const hopperRef = ref.child(4);
+				const hopperRef = ref.child(1);
 				hopperRef.update({
-				  'fechadev': current_date+" "+current_time,
+				  'fechadev': current_date+" "+current_time+" "+AmPm,
 				  'estado': 'Devuelto'
 				});
 
