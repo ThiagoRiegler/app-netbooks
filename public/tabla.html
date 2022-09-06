@@ -82,7 +82,7 @@
 				cell8.innerHTML = d.estado.replace(/"/g, '');
 				if(d.estado=='"En uso"'){
 
-					cell9.innerHTML = '<button type="button" class="btn btn-outline-dark" onclick=devolver() value=i>Devuelto</button>';
+					cell9.innerHTML = '<button type="button" class="btn btn-outline-dark" onclick=devolver(this.id) id="'+i+'">Devuelto</button>';
 	
 				}
 
@@ -144,7 +144,7 @@
 						cell8.innerHTML = d.estado.replace(/"/g, '');
 						if(d.estado=='"En uso"'){
 
-							cell9.innerHTML = '<button type="button" class="btn btn-outline-dark" onclick=devolver()>Devuelto</button>';
+							cell9.innerHTML = '<button type="button" class="btn btn-outline-dark" onclick=devolver(this.id) id="'+i+'">Devuelto</button>';
 	
 						}
 					}
@@ -153,7 +153,7 @@
 				
 			}	
 
-			function devolver(){
+			function devolver(clicked_id){
 				var date = new Date();
 				var hora = date.getHours();
 				var minutos = date.getMinutes();
@@ -183,7 +183,7 @@
 
 				var db = firebase.database();
 				var ref = db.ref("MarcelaProjectX");
-				const hopperRef = ref.child(1);
+				const hopperRef = ref.child(clicked_id);
 				hopperRef.update({
 				  'fechadev': current_date+" "+current_time+" "+AmPm,
 				  'estado': 'Devuelto'
