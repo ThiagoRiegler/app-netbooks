@@ -43,17 +43,11 @@
 			function MostrarTabla(){
 			var i = 1;
 
-				//Muestra los datos en una tabla
 			var db = firebase.database();
-			var ref = db.ref("MarcelaProjectX");
-					     
+			var ref = db.ref("MarcelaProjectX");		     
 			var table = document.getElementById("tabla");
-					    
-			//limpia la tabla
 			table.innerHTML = "";
 			diagonal = String.fromCharCode(92);
-					 
-			//con esta función recorre todos los datos almacenados en FB ordenados por mi child(tipo)    
 			ref.orderByKey().on("child_added", function(snapshot){
 
 			//repite el proceso como cuantas referencias encuentre y los asigna a la lista "d" 

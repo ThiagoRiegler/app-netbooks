@@ -19,6 +19,8 @@
 
 		<script type="module">//Conecta con la base de datos
 
+			import 'https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js';
+
 			import {initializeApp} from 'https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js';
 
 			const firebaseConfig = {
@@ -40,33 +42,23 @@
 
 		<script>
 
+
 			function IniciarSesion(){
 
-				var db = firebase.database();
-				var ref = db.ref("usuarios");
+				var x = document.getElementById('frm1');
+				var usuario = "";
+				usuario = x.elements[0].value;
+				usuario = usuario.concat("@gmail.com");
+				var contraseña = "";
+				contraseña = x.elements[1].value;
 
-				ref.on("child_added", function(snapshot){
+				console.log(usuario, contraseña);
 
-					var d = snapshot.val();
+				firebase.auth().signInWithEmailAndPassword(usuario, contraseña).then(() => { location.href = 'tabla.html'}).catch(function(error) {
 
-					{
-
-						var user = d.usuario;
-						var pass = d.pass;
-
-					}
-
-					if(email == user && contrasena == pass ){
-    					window.location.href = "tabla.html";
-    				}else{
-    					alert("Usuario o contraseña incorrecta");
-    					location.reload();
-    				}
+				    alert("Usuario o contraseña incorrecta");
 
 				});
-
-				var email = document.getElementById('email').value;
-   				var contrasena = document.getElementById('pass').value;	
 
 			}
 
