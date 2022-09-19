@@ -89,7 +89,7 @@
 			});		
 			}
 
-			function ConsultaFecha(){		
+			function ConsultaFecha(){	
 
 				var i = 1;
 
@@ -101,17 +101,14 @@
   				var text = "";
     			text = x.elements[0].value;
 
-				text = dayjs(text).format('DD-MM-YYYY');
     			var comilla = '"';
-    			var barra = String.fromCharCode(92,47);
-    			fechaFin = comilla.concat(text,comilla);
-    			fechaFin = fechaFin.replace(/-/g, barra)
+    			curso = comilla.concat(text,comilla);
 
 				//limpia la tabla
 				table.innerHTML = "";
 
-				recentPostsRef.orderByChild('fecha')
-				.equalTo(fechaFin)
+				recentPostsRef.orderByChild('curso')
+				.equalTo(curso)
 				.on("child_added", function(snapshot) {
 			  		
 					console.log(snapshot.val());
@@ -142,7 +139,7 @@
 						if(d.estado=='"En uso"'){
 
 							cell9.innerHTML = '<button type="button" class="btn btn-outline-dark" onclick=devolver(this.id) id="'+i+'">Devuelto</button>';
-	
+			
 						}
 
 						i++;
@@ -228,8 +225,8 @@
 			<div class=" d-grid gap-2 d-md-flex justify-content-md-end">
 				
 				<div class="input-group flex-nowrap w-25 mx-auto">
-  					<span class="input-group-text">Fecha</span>
- 					<input type="date" class="form-control">
+  					<span class="input-group-text">Curso</span>
+ 					<input type="text" class="form-control">
  					<input class="btn btn-outline-dark" type="button" value="Buscar" onclick="ConsultaFecha()">
 				</div>
 
