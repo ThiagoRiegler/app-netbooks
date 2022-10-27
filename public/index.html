@@ -55,7 +55,7 @@
 
 				console.log(usuario, contraseña);
 
-				firebase.auth().signInWithEmailAndPassword(usuario, contraseña).then(() => { location.href = 'tabla.html'}).catch(function(error) {
+				firebase.auth().signInWithEmailAndPassword(usuario, contraseña).then(() => { location.href = 'tablasSuperior/tablaFecha.html'}).catch(function(error) {
 
 				    alert("Usuario o contraseña incorrecta");
 

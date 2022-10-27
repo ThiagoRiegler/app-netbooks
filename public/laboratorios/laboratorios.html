@@ -4,7 +4,7 @@
 	<head>
 	
 		<title>Registro material informatico</title>
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
 		<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,8 +35,8 @@
 
 			firebase.initializeApp(firebaseConfig);
 
-			MostrarTabla();			
-			
+			MostrarTabla();	
+
 		</script>
 
 		<script>	
@@ -45,7 +45,7 @@
 			var i = 1;
 
 			var db = firebase.database();
-			var ref = db.ref("MarcelaProjectX");		     
+			var ref = db.ref("Laboratorios");		     
 			var table = document.getElementById("tabla");
 			table.innerHTML = "";
 			diagonal = String.fromCharCode(92);
@@ -62,22 +62,18 @@
 				var cell4 = row.insertCell(3);
 				var cell5 = row.insertCell(4);
 				var cell6 = row.insertCell(5);
-				var cell7 = row.insertCell(6);
-				var cell8 = row.insertCell(7);
-				var cell9 = row.insertCell(8);
+                var cell7 = row.insertCell(6);
 
 				// asigna a las celdas el valir del Child especificado
-				cell1.innerHTML = d.fecha.replace(/"/g, '').replace(diagonal, '').replace(diagonal, '');
-				cell2.innerHTML = d.hora.replace(/"/g, '');
-				cell3.innerHTML = d.cargo.replace(/"/g, '');
-				cell4.innerHTML = d.nombre.replace(/"/g, '');
-				cell5.innerHTML = d.curso.replace(/"/g, '').replace(diagonal, '').replace(diagonal, '');
-				cell6.innerHTML = d.PC.replace(/"/g, '');
-				cell7.innerHTML = d.fechadev.replace(/"/g, '').replace(diagonal, '').replace(diagonal, '');
-				cell8.innerHTML = d.estado.replace(/"/g, '');
+                cell1.innerHTML = d.curso.replace(/"/g, '').replace(diagonal, '').replace(diagonal, '');
+                cell2.innerHTML = d.estado.replace(/"/g, '');
+				cell3.innerHTML = d.fecha.replace(/"/g, '').replace(diagonal, '').replace(diagonal, '');
+				cell4.innerHTML = d.hora.replace(/"/g, '');
+                cell5.innerHTML = d.laboratorio.replace(/"/g, '');
+				cell6.innerHTML = d.nombre.replace(/"/g, '');
 				if(d.estado=='"En uso"'){
 
-					cell9.innerHTML = '<button type="button" class="btn btn-outline-dark" onclick=devolver(this.id) id="'+i+'">Devuelto</button>';
+					cell7.innerHTML = '<button type="button" class="btn btn-outline-dark" onclick=devolver(this.id) id="'+i+'">Devuelto</button>';
 	
 				}
 
@@ -89,7 +85,7 @@
 			});		
 			}
 
-			function ConsultaFecha(){		
+			function ConsultaFecha(){	
 
 				var i = 1;
 
@@ -101,17 +97,14 @@
   				var text = "";
     			text = x.elements[0].value;
 
-				text = dayjs(text).format('DD-MM-YYYY');
     			var comilla = '"';
-    			var barra = String.fromCharCode(92,47);
-    			fechaFin = comilla.concat(text,comilla);
-    			fechaFin = fechaFin.replace(/-/g, barra)
+    			nombre = comilla.concat(text,comilla);
 
-				//limpia la tabla
+				//limpia la tabla	
 				table.innerHTML = "";
 
-				recentPostsRef.orderByChild('fecha')
-				.equalTo(fechaFin)
+				recentPostsRef.orderByChild('nombre')
+				.equalTo(nombre) 
 				.on("child_added", function(snapshot) {
 			  		
 					console.log(snapshot.val());
@@ -119,34 +112,31 @@
 			  		var d = snapshot.val(); 
 
 					{
-						var row = table.insertRow(0);
-						var cell1 = row.insertCell(0);
-						var cell2 = row.insertCell(1);
-						var cell3 = row.insertCell(2);
-						var cell4 = row.insertCell(3);
-						var cell5 = row.insertCell(4);
-						var cell6 = row.insertCell(5);
-						var cell7 = row.insertCell(6);
-						var cell8 = row.insertCell(7);
-						var cell9 = row.insertCell(8);
+                        var row = table.insertRow(0);
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        var cell3 = row.insertCell(2);
+                        var cell4 = row.insertCell(3);
+                        var cell5 = row.insertCell(4);
+                        var cell6 = row.insertCell(5);
+                        var cell7 = row.insertCell(6);
 
-						// asigna a las celdas el valor del Child especificado
-						cell1.innerHTML = d.fecha.replace(/"/g, '').replace(diagonal, '').replace(diagonal, '');
-						cell2.innerHTML = d.hora.replace(/"/g, '');
-						cell3.innerHTML = d.cargo.replace(/"/g, '');
-						cell4.innerHTML = d.nombre.replace(/"/g, '');
-						cell5.innerHTML = d.curso.replace(/"/g, '').replace(diagonal, '').replace(diagonal, '');
-						cell6.innerHTML = d.PC.replace(/"/g, '').replace(diagonal, '').replace(diagonal, '');
-						cell7.innerHTML = d.fechadev.replace(/"/g, '');
-						cell8.innerHTML = d.estado.replace(/"/g, '');
-						if(d.estado=='"En uso"'){
+                        // asigna a las celdas el valir del Child especificado
+                        cell1.innerHTML = d.curso.replace(/"/g, '').replace(diagonal, '').replace(diagonal, '');
+                        cell2.innerHTML = d.estado.replace(/"/g, '');
+                        cell3.innerHTML = d.fecha.replace(/"/g, '').replace(diagonal, '').replace(diagonal, '');
+                        cell4.innerHTML = d.hora.replace(/"/g, '');
+                        cell5.innerHTML = d.laboratorio.replace(/"/g, '');
+                        cell6.innerHTML = d.nombre.replace(/"/g, '');
+                        if(d.estado=='"En uso"'){
 
-							cell9.innerHTML = '<button type="button" class="btn btn-outline-dark" onclick=devolver(this.id) id="'+i+'">Devuelto</button>';
-	
-						}
+                            cell7.innerHTML = '<button type="button" class="btn btn-outline-dark" onclick=devolver(this.id) id="'+i+'">Devuelto</button>';
+            
+                        }
 
-						i++;
-					}
+                        i++;
+
+                    }
 
 				})
 				
@@ -207,11 +197,13 @@
 		            Busqueda
 		          </a>
 		          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-		            <li><a class="dropdown-item" href="tabla.html">Fecha</a></li>
-		            <li><a class="dropdown-item disabled" href="tablaPC.html">PCs</a></li>
-		            <li><a class="dropdown-item" href="tablaCurso.html">Curso</a></li>
+		            <li><a class="dropdown-item" href="../tablasSuperior/tablaFecha.html">Fecha</a></li>
+		            <li><a class="dropdown-item disabled" href="../tablasSuperior/tablaPC.html">PCs</a></li>
+		            <li><a class="dropdown-item" href="../tablasSuperior/tablaCurso.html">Curso</a></li>
+					<li><a class="dropdown-item" href="../tablasSuperior/tablaProfesor.html">Profesor</a></li>
 		          </ul>
 		        </li>
+                <li><a class="nav-link" href="../laboratorios/laboratorios.html">Laboratorios</a></li>
 		      </ul>
 		    </div>
 		  </div>
@@ -228,8 +220,8 @@
 			<div class=" d-grid gap-2 d-md-flex justify-content-md-end">
 				
 				<div class="input-group flex-nowrap w-25 mx-auto">
-  					<span class="input-group-text">Fecha</span>
- 					<input type="date" class="form-control">
+  					<span class="input-group-text">Nombre</span>
+ 					<input type="text" id="nombre">
  					<input class="btn btn-outline-dark" type="button" value="Buscar" onclick="ConsultaFecha()">
 				</div>
 
@@ -245,14 +237,12 @@
 			<table class="table table-hover table-bordered">
 		    	<thead>
 		        	<tr>
-		            	<th>Fecha</th>
-		            	<th>Hora</th>
-		                <th>Cargo</th>
-		            	<th>Nombre y apellido</th>
 		            	<th>Curso</th>
-		                <th>PCs</th>
-		                <th>Fecha de devolucion</th>
-		                <th>Estado</th>    
+		            	<th>Estado</th>
+		                <th>Fecha</th>
+		            	<th>Hora</th>
+		            	<th>Laboratorio</th>
+		                <th>Nombre y Apellido</th>    
 		                <th></th>                                
 		            </tr>
 		     	</thead>
@@ -260,7 +250,7 @@
 		    	</tbody>
 		</div>
 
-		<script src="js/bootstrap.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
 
 	</body>
 
