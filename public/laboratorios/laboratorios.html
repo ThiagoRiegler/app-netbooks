@@ -83,6 +83,7 @@
 			}
 			 
 			});		
+
 			}
 
 			function ConsultaFecha(){	
@@ -137,6 +138,21 @@
                         i++;
 
                     }
+
+					const client = algoliasearch('CJHA9C1DBQ', '8711f16313090a7ffaebb372340a91cd');
+					const index = client.initIndex('laboratorios');
+					
+					index.saveObject({
+						fecha: d.fecha,
+						hora: d.hora,
+						laboratorio: d.laboratorio,
+						nombre: d.nombre,
+						curso: d.curso,
+						estado: d.estado,
+						objectID: i
+					}).then(() => {
+					// done
+					});
 
 				})
 				
